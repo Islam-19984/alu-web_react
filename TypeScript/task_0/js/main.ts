@@ -1,43 +1,47 @@
-interface Student {
+export interface Student {
     firstName: string;
     lastName: string;
     age: number;
     location: string;
   }
-  
   const student1: Student = {
-    firstName: "John",
-    lastName: "Doe",
+    firstName: 'First',
+    lastName: 'Student',
     age: 20,
-    location: "New York",
+    location: 'Nairobi',
   };
-  
   const student2: Student = {
-    firstName: "Jane",
-    lastName: "Smith",
-    age: 22,
-    location: "London",
+    firstName: 'Second',
+    lastName: 'Student',
+    age: 100,
+    location: 'Nairobi',
   };
   
-  const studentsList: Student[] = [student1, student2];
+  const studentsList: Array<Student> = [student1, student2];
   
-  const table = document.createElement("table");
-  const tableBody = document.createElement("tbody");
+  function render(students: Array<Student>) {
+    const table = document.createElement('TABLE');
+    const thead = document.createElement('THEAD');
+    const thead_tr = document.createElement('TR');
+    const tbody = document.createElement('TBODY');
+    Object.keys(students[0]).forEach((k) => {
+      const th = document.createElement('TH');
+      th.innerText = k;
+      thead_tr.appendChild(th);
+    });
+    thead.appendChild(thead_tr);
+    table.appendChild(thead);
+    students.forEach((student: Student) => {
+      const tr = document.createElement('TR');
+      Object.values(student).forEach((v) => {
+        const td = document.createElement('TD');
+        td.innerText = v.toString();
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+    document.querySelector('body').appendChild(table);
+  }
   
-  studentsList.forEach((student) => {
-    const row = document.createElement("tr");
-  
-    const firstNameCell = document.createElement("td");
-    firstNameCell.textContent = student.firstName;
-  
-    const locationCell = document.createElement("td");
-    locationCell.textContent = student.location;
-  
-    row.appendChild(firstNameCell);
-    row.appendChild(locationCell);
-    tableBody.appendChild(row);
-  });
-  
-  table.appendChild(tableBody);
-  document.body.appendChild(table);
-  
+  render(studentsList);
